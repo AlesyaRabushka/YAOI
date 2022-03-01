@@ -11,10 +11,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 
-from kivy.config import ConfigParser
-import ast
 
-global user_name
 # самый первый экран
 class MainScreen(Screen):
 
@@ -57,8 +54,7 @@ class SubmitScreen(Screen):
                          background_normal='',
                          on_press=self.start_test)
 
-        user_name = ast.literal_eval(
-            App.get_running_app().config.get('General', 'user_name'))
+
         self.user_name.bind(text=self.on_text)
 
         fl_test.add_widget(lbl_test_name)
@@ -131,11 +127,7 @@ class TestScreen(Screen):
 
 class Alena(Screen):
     def __init__(self, **kwargs):
-        self.app = App.get_running_app()
-
-        self.app.user_data = ast.literal_eval(
-            self.app.config.get('General', 'user_data'))
-        print(self.app.user_data)
+        pass
 
 class WhatScreen(Screen):
     def __init__(self, **kwargs):
