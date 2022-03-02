@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.image import Image
 
 from kivy.core.window import Window
 
@@ -23,12 +24,15 @@ class MainScreen(Screen):
 
         lbl_main = Label(text='[color=66CC00]Тест[/color] [color=FFFF66]на[/color] [color=FF0000]я[/color][color=FF8000]о[/color][color=FFFF00]й[/color][color=80FF00]щ[/color][color=00FFFF]и[/color][color=0080FF]к[/color][color=7F00FF]а[/color]\n',
             font_size='50sp', markup=True)
-        btn_welcome = Button(text='Начать', font_size='50sp', size_hint=(None, None), size=[350, 150],
+        btn_welcome = Button(text='Начать', font_size='50sp', size_hint=(None, None), size=[350, 120],
                          background_color='FF99CC',
                          background_normal='',
                          on_press=self.start_test)
 
+
         bl_main.add_widget(lbl_main)
+        # добавление картинки
+        bl_main.add_widget(Image(source='1.png'))
         anc_main.add_widget(btn_welcome)
         bl_main.add_widget(anc_main)
         self.add_widget(bl_main)
@@ -37,7 +41,7 @@ class MainScreen(Screen):
         self.manager.transition.direction='left'
         self.manager.current='name_screen'
 
-
+# ввод имени пользователя
 class SubmitScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -79,7 +83,6 @@ class SubmitScreen(Screen):
 class TestScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         bl = GridLayout(rows=3)
         lbl = Label(text='Ты читаешь [color=FF0000]я[/color][color=FF8000]о[/color][color=FFFF00]й[/color][color=0000FF]?[/color]', font_size='50sp', markup=True)
         gr = BoxLayout(orientation='horizontal',spacing=30, padding=100)
@@ -128,33 +131,50 @@ class TestScreen(Screen):
 class Alena(Screen):
     def __init__(self, **kwargs):
         pass
-
+# что такое яой?
 class WhatScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        main_layout=GridLayout(rows=2)
-        first_layout=AnchorLayout(padding=100, anchor_x='center', anchor_y='center')
+        l = AnchorLayout()
+        main_layout=BoxLayout(orientation='vertical', size=(700, 700))
+
+        first_layout=GridLayout(cols=2, spacing=20, padding=30)
         text=Label(text='[color=FF0000]Я[/color][color=FF8000]о[/color][color=FFFF00]й[/color] - жанр манги и аниме,\n'
-                        ' изображающий гомосексуальные отношения\n '
-                        'между мужчинами. Целевой аудиторией\n '
-                        'яоя и авторами яойной манги являются девушки\n'
-                        ' и женщины, как правило, [color=66B2FF]гетеросексуальные[/color].',
-                   font_size='30sp', halign='center', markup=True,
-                   size_hint=(None, None), width=100, height=10)
-        return_btn = Button(text='[color=FF00FF]Вернуться назад[/color]', font_size='35sp',
-                            size_hint=(None, None), width=300, height=100,
+                        ' изображающий гомосексуальные\n'
+                        ' отношения между мужчинами.\n'
+                        ' Целевой аудиторией яоя и авторами\n'
+                        ' яойной манги являются девушки\n'
+                        ' и женщины, как правило,\n [color=66B2FF]гетеросексуальные[/color].\n'
+                            '(а ещё персонажи [color=80FF00]я[/color][color=00FFFF]о[/color][color=0080FF]я[/color] невероятные\n [color=CC99FF]КРАСАВЦЫ[/color])',
+                   font_size='23sp', halign='center', valign = 'center', markup=True,
+                   size_hint=(None, None), width=400, height=300)
+        first_layout.add_widget(text)
+        first_layout.add_widget(Image(source='яой1.jpg', size_hint=(None, None), width=300, height=300))
+
+        second_layout = GridLayout(cols=2, spacing=30, padding=80)
+        look_btn=Button(text='Посмотреть на красавцев', font_size='30sp',
+                            size_hint=(None, None), width=400, height=90,
                             background_color='FFCCFF', markup=True,
                             background_normal='',
                             on_press=self.go_back)
 
-        second_layout=AnchorLayout(anchor_x='center', anchor_y='center')
+        return_btn = Button(text='[color=FF00FF]Вернуться назад[/color]', font_size='30sp',
+                            size_hint=(None, None), width=400, height=90,
+                            background_color='FFCCFF', markup=True,
+                            background_normal='',
+                            on_press=self.go_back)
+
+
         second_layout.add_widget(return_btn)
+        second_layout.add_widget(look_btn)
 
-
-        first_layout.add_widget(text)
         main_layout.add_widget(first_layout)
         main_layout.add_widget(second_layout)
-        self.add_widget(main_layout)
+
+        l.add_widget(main_layout)
+
+
+        self.add_widget(l)
 
     def go_back(self, args):
         self.manager.transition.direction='right'
